@@ -726,7 +726,7 @@ Thus, in order to observe the above properties of self-regulated MRTA , we have 
 \caption{Experimental parameters of Series A \& B experiments}
 \label{table:params}
 \begin{center}
-\begin{tabular}{|p{2in}|c|}
+\begin{tabular}{|p{1.5in}|c|}
 \hline Parameter & Series A $\mid$ Series B\\
 \hline Total number of robots ($N$) & \hspace*{0.1cm} 8 $\mid$ 16\\
 \hline Total number of tasks ($M$) & 2 $\mid$ 4\\
@@ -744,7 +744,7 @@ Thus, in order to observe the above properties of self-regulated MRTA , we have 
 %%
 %------------------------------------------------------------
 \subsection{Parameters}
-Table \ref{table:params} lists a set of essential parameters of our GSNC startegy based experiments (Series A and B). We intend to have a set-up that is relatively complex, i.e., with a high number of robots and tasks in a large area. The diameter of the marker of our e-puck robot is 0.08m (Fig \ref{fig:e-puck}). So, if we put 4 robots in an area of one square meter, this will give us a robot-occupied-space to free-space ratio of about 1:49 per square meter. This ratio is reasonable in order to allow the robots to move at a speed of 5 cm/sec without causing much interference to each other. 
+Table \ref{table:params} lists a set of essential parameters of our GSNC startegy based experiments (Series A and B). We intend to have a set-up that is relatively complex, i.e., with a high number of robots and tasks in a large area. The diameter of the marker of our e-puck robot is 0.08m. So, if we put 4 robots in an area of one square meter, this will give us a robot-occupied-space to free-space ratio of about 1:49 per square meter. This ratio is reasonable in order to allow the robots to move at a speed of 5 cm/sec without causing much interference to each other. 
 
 The initial values of task urgencies correspond to 100 units of production work-load without any maintenance work-load as outlined in Eq. \ref{eqn:task-urgency-prod-init}. We choose a limit of 0 and 1, where 0 means no urgency and 1 means maximum urgency. Same rule applies to sensitisation, where 0 means no sensitisation and 1 means maximum sensitisation. This also implies that if sensitization is 0, task has been forgotten completely. On the other hand, if sensitization is 1, the task has been learnt completely. We choose a initial sensitization value of 0.1 for all tasks. The following relationships are maintained for selecting task-urgency and sensitization parameters.
 \begin{equation}
@@ -784,14 +784,6 @@ Series D uses larger ranges that enables our robot to capture more task informat
 %==============================================================
 \section{Implementation}
 \label{sec:imp}
-\begin{figure*}
-\centering
-\subfloat[E-puck robot]{\includegraphics[width=0.3\linewidth,height=5cm]{images/epuck-happy.eps}} 
-\hspace{1cm}
-\subfloat[A binary-coded marker]{\includegraphics[width=0.3\linewidth,height=5cm]{images/20-31412.eps}}
-\caption{(a) The e-puck robot with SwisTrack marker on top, (b) A binary coded marker that can be tracked by an overhead camera  using SwisTrack.}
-\label{fig:e-puck}
-\end{figure*}
 %%
 \begin{figure*}
 \centering
