@@ -1,0 +1,17 @@
+README
+*_HOWTO.pdf
+bare*
+*.sty
+*.cls
+*.b*
+*.out
+*.aux
+*.dvi
+*.log
+*.toc
+#*.eps
+*.dia~
+*.ps
+*.png
+#*.pdf
+*.spl
