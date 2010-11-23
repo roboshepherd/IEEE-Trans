@@ -115,7 +115,7 @@
 \end{acronym}
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Self-organized Multi-robot Task~Allocation using Attractive Filed Model: A Taxonomy and Comparison of Centralized and Local Communication}
+\title{Self-organized Multi-robot Task~Allocation using Attractive Filed Model: Comparison of Centralized and Local Communication}
 %
 %
 % author names and IEEE memberships
@@ -540,12 +540,12 @@ Algorithm 2 lists the pseudo-code for updating (learning and forgetting) the rob
 \section{Communication models}
 \label{sec:comm-model}
 \subsection{Centralized communication model}
-\begin{figure}
-\centering
-\includegraphics[width=.7\columnwidth, angle=0]{./images/CentralizedComm.eps}
-\caption{\small A centralized communication scheme} % for implementing AFM}
-\label{fig:ccm} % Give a unique label
-\end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[width=.7\columnwidth, angle=0]{./images/CentralizedComm.eps}
+%\caption{\small A centralized communication scheme} % for implementing AFM}
+%\label{fig:ccm} % Give a unique label
+%\end{figure}
 %%
 AFM relies upon a system-wide continuous flow of information which can be realized using any suitable communication model. A simple centralized communication scheme is outlined in Fig. \ref{fig:ccm}. In this model we have used bi-directional signal-based exchange of communication messages between a centralized \textit{task perception server} (TPS) and a \textit{robot-controller client} (RCC). The main role of TPS is to send up-to-date task-information to RCCs. This  task-information mainly contains the location and urgency of all tasks  which is used by the RCCs for running their task-allocation algorithm. The urgency value of each task is dynamically updated  by TPS after receiving the  status signals from the working robots of that particular task. Fig. \ref{fig:ccm} shows how three robots are attracted to two different tasks and their communications with TPS. Here although the robots are selecting task independently based-on the strength of their attractive fields to different tasks, they are depended on the TPS for task-information.
 %%
@@ -561,7 +561,6 @@ AFM relies upon a system-wide continuous flow of information which can be realiz
 AFM suggests the communication of task-urgencies  among robots. This communication helps the robots to gain information that can be  treated as ``global sensing''. However in this model  robots do not communicate among themselves. Hence this model can be approximated as the GSNC strategy. Since in order to run the task-allocation algorithm robot-controllers need the distance information we also include the task position information in  the message. Our centralized communication model is open to include any further information, such as time-stamp, in the message payload. In this centralized communication model the frequency of signal emission depends on several issues, e.g. the rate at which the environment is changing, the bandwidth of communication medium. In case of time-extended tasks, robots can receive information less frequently and the  bandwidth usage can be kept  minimum. However under a fast changing environment relatively more bandwidth will be required.  Finally the centralized communication model spread the attractive fields of all tasks globally by broadcasting information to all robots.  
 %%
 %\subsection{Algorithm}
-
 The algorithm that updates the task-urgencies in TPS is given here.\\
 \textbf{Algorithm 3: Task-urgency update rules based on AFM}
 \vspace{-3mm}
@@ -599,7 +598,6 @@ In most swarm robotic research local communication is considered as the one of t
 %\subsection{General characteristics}
 Our LPCM relies on the local P2P communications among robots. we have assumed that robots can communicate to its nearby peers within a certain communication radius, $r_{comm}$ and they can sense tasks within another radius $r_{task}$. They exchange communication signals reliably without any significant loss of information. A robot $R_1$ is a {\em peer} of robot $R_2$, if spatial distance between $R_1$ and $R_2$ is less than this $r_{comm}$.
 Similarly, when a robot comes within this $r_{task}$ of a task, it can sense the status of this task. Although the communication and sensing  range can be different based on robot capabilities, we have considered them same for the sake of simplicity of our implementation.
-
 Local communication can also give robots similar task information as in centralized communication. In this case, it is not necessary for each robot to communicate with every other robot to get information on all tasks. Since robots can random walk and explore the environment we assume that for a reasonably high robot-to-space density, all tasks will be known to all robots after an initial exploration period. In order to update the urgency of a task, robots can estimate the number of robots working on a task in two ways:  by either using their sensory perception (e.g. on-board camera) or  doing local P2P communication with others.
 
 Similar to our centralized communication model, we can characterize our local communication model in terms of message content, communication frequency and target recipients \cite{Gerkey+2001}. Regarding the issue of message content, our local communication model is open. Robots can communicate with their peers with any kind of message. Our local model addresses the last two issues very specifically. Robots communicate only when they meet their peers within a certain communication radius ($r_{comm}$). Although in case of an environment where robots move relatively faster the peer relationships can also be changed dynamically. But this can be manipulated by setting the signal frequency and robot to space density to somewhat reasonably higher value.
@@ -655,7 +653,7 @@ Within the context of our self-regulated MRTA experiments under AFM,  we have fo
 From Algorithm 4, we see that a robot controller is initialized with its specific $RobotID$ and default values of $r_{comm}$ and $r_{task}$ that correspond to the robot's communication and sensing ranges respectively. We have assumed that these values are same for all robots and for all tasks. Initially a robot has no information about tasks, i.e. {$TaskInfoDB$}, $ListeningBuffer$ and $EmissionBuffer$ all are empty. Upon sensing a task, robot determines the task's pose and urgency of that task. This is not strictly necessary as this information can also be available from alternate sources, e.g. via communicating with a TPS which is discussed later.
 
 Robot controller then executes the \textbf{UpdateTaskInfoDB()} that modified the robot's information about the corresponding task. In second step, robot senses its nearby peers located within $r_{comm}$. The potential \textit{LocalTaskInfo} signal reception from a  peer again triggers the \textbf{UpdateTaskInfoDB()} function. In the last step, robot emits its own task information as a \textit{LocalTaskInfo} signal to its peers.
-
+%%
 %\subsection{Implementation strategy}
 %In order to implement LPCM, our centralized communication scheme has been converted into a decentralized one where robots can use local observation and communicate with peers about tasks to estimate task-urgencies. Under this implementation, we present an emulation of this scenario where robots do not depend entirely on TPS for estimating task-urgencies, instead they get task information from TPS when they are very close to a task (inside $r_{task}$) or from local peers who know about a task via TPS. The specific implementation of P2P signals are discussed in Sec. \ref{afm:impl}.
 %=====================================================================
@@ -748,107 +746,106 @@ Series D uses larger ranges that enables our robot to capture more task informat
 \end{tabular}
 \end{center}
 \end{table}
-
 %==============================================================
 \section{Implementation}
 \label{sec:imp}
 %%
 \begin{figure*}
 \centering
-\includegraphics[width=0.9\textwidth, angle=0]
+\includegraphics[width=0.6\textwidth, angle=0]
 {./images/RIL-Expt-Setup1.eps}
 %figure caption is below the figure
 \caption{Hardware and software setup for series A \& B experiments}
 \label{fig:RIL-Expt-Setup1} % Give a unique label
 \end{figure*}
 %%
-Ideally, AFM can be implementation as a complete distributed task-allocation system where each agent selects its own task based on its own external perception about task-urgencies (i.e. attractive fields),  distances from tasks and internal task-sensitisation records. Such an implementation requires powerful robots with sophisticated sensors (camera, laser etc.) and sufficient computation and communication  capabilities. In that case, robots can keep  task-urgency information up-to-date  through suitable local communication  schemes with their peers who can monitor the tasks. By using suitable navigation and mapping modules, they can also accurately calculate the distances from tasks and navigate to tasks autonomously. Moreover, they also require necessary hardware to do the actual task, e.g. gripper for picking up objects. However, in this study, we are particularly interested to find the suitable communication schemes that can effectively spread the attractive fields (task-urgencies) among robots. So we have simplified the complexities of a full-fledged implementation by using a centralized communication system  that effectively makes up the limitations of our e-puck robots.  For example, our robots are not  capable of sensing a task to estimate its urgencies, instead our centralized TPS broadcast task information, e.g. task-urgencies, locations etc. to robots in certain time intervals. 
-
-\begin{figure*}
-\centering
-\hspace*{1cm}
-%\includegraphics[width=10cm,height=7.5cm,angle=0]
-\subfloat[]{
-\includegraphics[width=0.65\linewidth,angle=0]
-{./images/RILSnapshot1.eps}}
-\newline
-\subfloat[]{
-\includegraphics[width=0.65\linewidth]
-{./images/RILCamcorderSnapshot1.eps}}
-\caption{Our experiment arena captured by (a) a GigE4900C camera mounted on 3m high ceiling (b) an ordinary camcorder.}
-\label{fig:expt-arena} % Give a unique label
-\end{figure*}
+Ideally, AFM can be implemented as a complete distributed task-allocation system where each agent selects its own task based on its own external perception about task-urgencies (i.e. attractive fields),  distances from tasks and internal task-sensitisation records. Such an implementation requires powerful robots with sophisticated sensors (camera, laser etc.) and sufficient computation and communication  capabilities. In that case, robots can keep  task-urgency information up-to-date  through suitable local communication  schemes with their peers who can monitor the tasks. By using suitable navigation and mapping modules, they can also accurately calculate the distances from tasks and navigate to tasks autonomously. Moreover, they also require necessary hardware to do the actual task, e.g. gripper for picking up objects. However, in this study, we are particularly interested to find the suitable communication schemes that can effectively spread the attractive fields (task-urgencies) among robots. So we have simplified the complexities of a full-fledged implementation by using a centralized communication system  that effectively makes up the limitations of our e-puck robots.  For example, our robots are not  capable of sensing a task to estimate its urgencies, instead our centralized TPS broadcast task information, e.g. task-urgencies, locations etc. to robots in certain time intervals. 
+%%
+%\begin{figure*}
+%\centering
+%\hspace*{1cm}
+%%\includegraphics[width=10cm,height=7.5cm,angle=0]
+%\subfloat[]{
+%\includegraphics[width=0.65\linewidth,angle=0]
+%{./images/RILSnapshot1.eps}}
+%\newline
+%\subfloat[]{
+%\includegraphics[width=0.65\linewidth]
+%{./images/RILCamcorderSnapshot1.eps}}
+%\caption{Our experiment arena captured by (a) a GigE4900C camera mounted on 3m high ceiling (b) an ordinary camcorder.}
+%\label{fig:expt-arena} % Give a unique label
+%\end{figure*}
 %%
 In our current implementation, instead of doing any real work with powerful robots, we emulate a mock manufacturing shop-floor scenario that requires the robot only to travel among tasks. As our robots do not have on-board CPU, they need a host PC to  control them using BTCom Bluetooth communication protocol over the wireless link \cite{Mondada+2009}. Thus our host-PC runs one RCC for each physical robot. These RCCs also rely upon SwisTrack multi-robot tracking system for updating their real-time pose. So although our MRTA solution is distributed by design, we primarily used a centralized approach to implement it due to the limitations of our robots and the convenience of implementation. Table \ref{table:dbus-signals} list the D-Bus communication interfaces among our software components. Fig. \ref{fig:concrete-arch} outlines the placements of various software components of our multi-robot control architecture based on their functional characteristics and processing requirements \cite{Sarker2010control}.
 %%
-\begin{table*}
-\caption{D-Bus signal interfaces among software components.}
-\label{table:dbus-signals}
-\begin{center}
-\begin{tabular}{|l|l|l|p{1.8in}|p{0.5in}|}
-\hline D-Bus Signal &  Source & Destination  & Payload & Used in\\ 
-\hline RobotPose & SwisTrack & RCC  & Robot-pose x, y and oientation theta. & GSNC \& LSLC\\ 
-\hline TaskInfo & TPS & RCC & An array of all tasks' information each of them contains: task-id, time-stamp, task pose (x,y), task-urgency. & ,, \\ 
-\hline RobotStatus & RCC & TPS & Robot's id and its currently executing task's id. & ,, \\ 
-\hline RobotPeers & SwisTrack & RCC & List of IDs of peers of each robot within its communication range. & LSLC \\ 
-\hline TaskNeighbour & SwisTrack & TPS &  List of IDs of robots that are co-located within a task's perception range. & ,,\\ 
-\hline LocalTaskInfo & RCC & RCC & An array of known tasks' information. & ,,\\
-\hline 
-\end{tabular}
-\end{center} 
-\end{table*}
+%\begin{table}
+%\caption{D-Bus signal interfaces among software components.}
+%\label{table:dbus-signals}
+%\begin{center}
+%\begin{tabular}{|l|l|l|p{1.8in}|p{0.5in}|}
+%\hline D-Bus Signal &  Source & Destination  & Payload & Used in\\ 
+%\hline RobotPose & SwisTrack & RCC  & Robot-pose x, y and oientation theta. & GSNC \& LSLC\\ 
+%\hline TaskInfo & TPS & RCC & An array of all tasks' information each of them contains: task-id, time-stamp, task pose (x,y), task-urgency. & ,, \\ 
+%\hline RobotStatus & RCC & TPS & Robot's id and its currently executing task's id. & ,, \\ 
+%\hline RobotPeers & SwisTrack & RCC & List of IDs of peers of each robot within its communication range. & LSLC \\ 
+%\hline TaskNeighbour & SwisTrack & TPS &  List of IDs of robots that are co-located within a task's perception range. & ,,\\ 
+%\hline LocalTaskInfo & RCC & RCC & An array of known tasks' information. & ,,\\
+%\hline 
+%\end{tabular}
+%\end{center} 
+%\end{table}
 %%
-\begin{figure*}
-\begin{center}
-\includegraphics[width=0.7\linewidth,height=10cm]{./images/concrete-arch} 
+%\begin{figure*}
+%\begin{center}
+%\includegraphics[width=0.7\linewidth,height=10cm]{./images/concrete-arch} 
+%%\centering
+%\caption{General outline of {\em HEAD}. A RCC application has been split into two parts: one runs locally in server PC and another runs remotely, e.g., in an embedded PC.} 
+%\label{fig:concrete-arch}
+%\end{center}
+%\end{figure*}
+%%
+%\begin{figure*}
 %\centering
-\caption{General outline of {\em HEAD}. A RCC application has been split into two parts: one runs locally in server PC and another runs remotely, e.g., in an embedded PC.} 
-\label{fig:concrete-arch}
-\end{center}
-\end{figure*}
-%%
-\begin{figure*}
-\centering
-\includegraphics[width=0.7\linewidth,height=10cm]
-{./images/SwisTrackScreenshot.eps}
-\caption{SwisTrack tracking a team of 16 robots under Ubuntu Linux 9.10 OS.}
-\label{fig:swistrack-screenshot} 
-\end{figure*}
+%\includegraphics[width=0.7\linewidth,height=10cm]
+%{./images/SwisTrackScreenshot.eps}
+%\caption{SwisTrack tracking a team of 16 robots under Ubuntu Linux 9.10 OS.}
+%\label{fig:swistrack-screenshot} 
+%\end{figure*}
 %-----------------------
 \subsubsection{RCC Modules}
 As shown in Fig. \ref{fig:RIL-Expt-Setup1}, each e-puck robot is controlled by a corresponding RCC. A RCC sends commands to the robot's firmware using BTCom protocol. A RCC consists of several Python modules. Each module represents a sub-process under a main process that ties all of them together by using Python's Multiprocessing module\footnote{http://docs.python.org/library/multiprocessing.html}. Below we have described briefly the implementation of these Python modules. All code are publicly accessible through GitHub repository\footnote{git://@github.com/roboshepherd/EpuckCentralizedClient.git,    
 \textit{hash:}7e3af8902e64db3fa59e}.
 %%
 %%
-\begin{table}
-\caption{Data structures and events used by the RCC}
-\begin{center}
-\begin{tabular}{|l|l|}
-\hline \textbf{Data structure} & \textbf{Related event(s)}\\ 
-\hline \texttt{\texttt{mRobotID}} & - \\ 
-\hline \texttt{mRobotPose} & \texttt{mRobotPoseAvailable}\\ 
-\hline \texttt{mTaskInfo} & \texttt{mTaskInfoAvailable}\\ 
-\hline \texttt{mSelectedTask} & \texttt{mSelectedTaskAvailable}\\
- &  \texttt{mSelectedTaskStarted}\\
- &  \texttt{mTaskTimedOut}\\
- \hline 
-\end{tabular}
-\end{center}
-\label{table:data-mgr}
-\end{table} 
+%\begin{table}
+%\caption{Data structures and events used by the RCC}
+%\begin{center}
+%\begin{tabular}{|l|l|}
+%\hline \textbf{Data structure} & \textbf{Related event(s)}\\ 
+%\hline \texttt{\texttt{mRobotID}} & - \\ 
+%\hline \texttt{mRobotPose} & \texttt{mRobotPoseAvailable}\\ 
+%\hline \texttt{mTaskInfo} & \texttt{mTaskInfoAvailable}\\ 
+%\hline \texttt{mSelectedTask} & \texttt{mSelectedTaskAvailable}\\
+% &  \texttt{mSelectedTaskStarted}\\
+% &  \texttt{mTaskTimedOut}\\
+% \hline 
+%\end{tabular}
+%\end{center}
+%\label{table:data-mgr}
+%\end{table} 
 %---------------------
 In the implementation of RCC, we have employed a data and event management process called \texttt{DataManager} that acts as a data warehouse and event management centre for RCC. Table \ref{table:data-mgr} list the major data structures and corresponding event channels of \texttt{Data Manager}. Here \texttt{mRobotID} represents the e-puck robot's marker ID (converted to decimal number from the binary code) which uniquely identifies a robot from others.  We have used Python {\em dictionary} type data structure for all other data structures that are managed by the Python Multiprocessing's {\em Manager()} object.  \texttt{DataManager} object also runs a tiny TCP/IP server process powered by the Multiprocessing's {\em RemoteManager()} interface. So, if necessary,  any other process can access all of the DataManger's data structures and event channels remotely by instantiating a proxy client  that connects to this TCP/IP server process.
 
 We have employed two D-Bus communication modules in RCC: \texttt{SignalListener} and \texttt{SignalEmitter}, that are responsible for listening and emitting D-Bus signals respectively. \texttt{SignalListener}, has subscribed to D-Bus session bus for listening  to D-Bus \texttt{RobotPose} and \texttt{TaskInfo} signals. \texttt{SignalEmitter} makes use of Python {\em sched} module that enables it to check periodically \texttt{mSelectedTaskStarted} event and emit a robot's task status containing signal, \texttt{RobotStatus}. \texttt{TaskSelector} works in the application layer of our multi-robot control architecture. It plugs the AFM algorithms (Sec. \ref{ss:rcc-alg}) into RCC to select task based-on \texttt{DataManger}'s event notifications.
 %%
-\begin{figure*}
-\centering
-\includegraphics[width=0.7\linewidth,height=11cm]
-{./images/rcc-device-controller-state.eps}
-%figure caption is below the figure
-\caption{State diagram of \texttt{DeviceController} module}
-\label{fig:dc-states} % Give a unique label
-\end{figure*}
+%\begin{figure*}
+%\centering
+%\includegraphics[width=0.7\linewidth,height=11cm]
+%{./images/rcc-device-controller-state.eps}
+%%figure caption is below the figure
+%\caption{State diagram of \texttt{DeviceController} module}
+%\label{fig:dc-states} % Give a unique label
+%\end{figure*}
 
 %The final code that moves a robot to desired task location or make random-walk resides in \texttt{DeviceController} module. When \texttt{TaskSelector} sets  \texttt{mSelectedTaskAvailable} event \texttt{DeviceController} sub-process checks the Bluetooth link-connectivity with physical robot. In case of successful task start-up it sets \texttt{mSelectedTaskStarted} event that, in turn, triggers \texttt{SignalEmitter} to emit a D-Bus signal publishing the robot's currently engaged task. The full state switching policies of \texttt{DeviceController} is illustrated in Fig. \ref{fig:dc-states}. Externally we can observe two distinct physical state of a robot: it is either idle or in motion (separated by dotted line). These two physical states are mapped into several logical steps as described below.
 %
@@ -866,13 +863,11 @@ We have employed two D-Bus communication modules in RCC: \texttt{SignalListener}
 %
 %\textbf{AtTask: }
 %In this state  \texttt{DeviceController} discovers itself neat the task and normally until task time-out happens (i.e. task pending) it stays at this state.
-
 In order to realize LPCM strategy, in the implementation of RCC we have added three new D-Bus signal interfaces. They are briefly specified in Table \ref{table:dbus-signals}. Our base implementation of RCC's task-allocation (i.e. \texttt{TaskSelector}) is almost unchanged in this local implementation. The only thing we need to extend is the D-Bus signal reception and emission interfaces that catches the above signals and put the signal payload in \texttt{DataManager}. For the sake of simplicity, we have merges the perceived \texttt{TaskInfo} with communicated \texttt{LocalTaskInfo} into one so that \texttt{TaskAllocator} always gets all available task information. We have not made any major change in other modules of RCC, i.e. \texttt{DeviceController}. The full Python implementation of this RCC is available for download from the GitHub repository\footnote{http://github.com/roboshepherd/EpuckDistributedClient }.
 %---------------------------
 \subsubsection{TPS modules}
 In our GSNC strategy based implementation of TPS periodically broadcasts \texttt{TaskInfo} signals to all robots using similar D-Bus signal emitting and listening modules. Task information has been updated by a separate Python module following the TPS algorithm described before. In the local version, TPS only emits \texttt{TaskInfo} signal when a robot is within a task's perception range, $r_{task}$ based-on the \texttt{TaskNeighbour} signal from SwisTrack. For this additional interface, we have extended D-Bus \texttt{SignalListener} to catch this additional D-Bus signal.  No major changes are done in the other parts of TPS implementation. The full Python implementation of TPS is available for download from the authors' GitHub centralized\footnote{http://github.com/roboshepherd/CentralizedTaskServer}
 and distribued \footnote{http://github.com/roboshepherd/DitributedTaskServer} repositories.
-
 %================================================================
 \section{Results}
 \label{sec:results}
