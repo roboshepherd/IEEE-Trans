@@ -464,11 +464,12 @@ We can characterize our local communication model in terms of message content, c
 \section{Experimental design}
 \label{sec:expt-design}
 The overall aim of our MRTA experiments is to compare the various properties of self-regulated MRTA under both GSNC and LSLC strategies. These experiments are grouped into four series labelled using the following letters: \textit{A, B, C} and \textit{D}. Series A and B experiments are done using a centralized communication system under GSNC strategy and Series C and D experiments are carried out using an emulated local P2P communication under LSLC stategty. %Below we describe the observables and parameters of our experiments.
-\vspace*{-0.3cm}
+%\vspace*{-0.3cm}
 %----------------------------------------------------------
-\subsection{Observables}
+%\subsection{Observables}
 %\textbf{Plasticity:} %As we have discussed in Sec. \ref{bg:def:dol},  
 %
+
 Self-regulated MRTA is often characterised by the plasticity and task-specialization, in both macroscopic and microscopic levels \cite{Garnier+2007}. Within our manufacturing shop-floor context, plasticity refers to the collective ability of the robots to switch from  random-walking to doing a task (or vice-versa) depending on the work-load present in the system. Here we expect to see that most of the robots would be able to engage in tasks when there would be high workloads (or task-urgencies). The changes of task-urgencies and the ratio of robots engaged in tasks can be good metrics to observe plasticity in MRTA.
 %
 %\textbf{Task-specialization:} 
@@ -490,7 +491,8 @@ In order to characterize the energy-efficiency in MRTA we can log the pose data 
 %\textbf{Information flow:} 
 Since AFM requires a system-wide continuous flow of information, we can measure the communication load to bench-mark our implementation of communication system. Here we can measure  how much task-related information, i.e. task-urgency, location etc. are sent to the robots at each time step. 
 %
-%\textbf{Scalability:} 
+%\textbf{Scalability:}
+
 In order to see the effects of scaling on MRTA, we have designed two group of experiments. Series A corresponds to a small group where we have used 8 robots, 2 tasks under an arena of 2 $m^2$. We have doubled these numbers in Series B, C and D, i.e. 16 robots, 4 tasks under an arena of 4 $m^2$. This proportional design can give us a valuable insight about the effects of scaling on self-regulated MRTA. 
 %Thus, in order to observe the above properties of self-regulated MRTA , we have designed our experiments to record the following  observables in each time-step.
 %\begin{enumerate}
@@ -502,17 +504,18 @@ In order to see the effects of scaling on MRTA, we have designed two group of ex
 %\end{enumerate}
 %%
 %------------------------------------------------------------
-\subsection{Parameters}
+%\subsection{Parameters}
 \begin{table}[t]
-\caption{Experimental parameters of Series A \& B experiments}
+\caption{\small Experimental parameters of Series A \& B }
 \label{table:params}
 \begin{center}
-\begin{tabular}{|p{1.5in}|c|}
-\hline Parameter & Series A $\mid$ Series B\\
+\begin{small}
+\begin{tabular}{|p{2in}|c|}
+\hline Parameter &  A $\mid$  B\\
 \hline Total number of robots ($N$) & \hspace*{0.1cm} 8 $\mid$ 16\\
 \hline Total number of tasks ($M$) & 2 $\mid$ 4\\
-\hline Experiment area ($A$) & 2 $m^2$ $\mid$  4 $m^2$\\
-\hline Initial production work load/machine ($\Omega_{j}^{p}$) & 100 unit \\
+\hline Experiment area ($A$) $m^2$  & 2 $\mid$  4 \\
+\hline Initial production work ($\Omega_{j}^{p}$) unit & 100\\
 \hline Task urgency increase rate ($\Delta\phi_{INC}$) & 0.005\\
 \hline Task urgency decrease rate ($\Delta\phi_{DEC}$) & 0.0025\\
 \hline Initial sensitization ($K_{INIT}$) & 0.1\\
@@ -520,22 +523,24 @@ In order to see the effects of scaling on MRTA, we have designed two group of ex
 \hline Sensitization decrease rate ($\Delta k_{DEC}$) & 0.01\\
 \hline
 \end{tabular}
+\end{small}
 \end{center}
+\vspace*{-1cm}
 \end{table}
 %%
 Table \ref{table:params} lists a set of essential parameters of our GSNC strategy based experiments (Series A and B). %We intend to have a set-up that is relatively complex, i.e., with a high number of robots and tasks in a large area. The diameter of the marker of our e-puck robot is 0.08m. So, if we put 4 robots in an area of one square meter, this will give us a robot-occupied-space to free-space ratio of about 1:49 per square meter. This ratio is reasonable in order to allow the robots to move at a speed of 5 cm/sec without causing much interference to each other. 
-The initial values of task urgencies correspond to 100 units of production work-load without any maintenance work-load as outlined in Eq. \ref{eqn:task-urgency-prod-init}. We choose a limit of 0 and 1, where 0 means no urgency and 1 means maximum urgency. Same rule applies to sensitisation, where 0 means no sensitisation and 1 means maximum sensitisation. This also implies that if sensitization is 0, task has been forgotten completely. On the other hand, if sensitization is 1, the task has been learnt completely.  The following relationships are maintained for selecting task-urgency and sensitization parameters.
-\begin{equation}
-\Delta\phi_{INC} = \frac{\Delta\phi_{DEC} \times N}{2 \times J}
-\label{eqn:task-urgency}
-\end{equation}
+The initial values of task urgencies correspond to 100 units of production work-load without any maintenance work-load as outlined in Eq. \ref{eqn:task-urgency-prod-init}. We choose a limit of 0 and 1, where 0 means no urgency and 1 means maximum urgency. Same rule applies to sensitisation, where 0 means no sensitisation and 1 means maximum sensitisation. This also implies that if sensitization is 0, task has been forgotten completely. On the other hand, if sensitization is 1, the task has been learnt completely.  %The following relationships are maintained for selecting task-urgency and sensitization parameters.
+%\begin{equation}
+%\Delta\phi_{INC} = \frac{\Delta\phi_{DEC} \times N}{2 \times J}
+%\label{eqn:task-urgency}
+%\end{equation}
+%%
+%\begin{equation}
+%\Delta k_{DEC} = \frac{\Delta k_{INC}} {J - 1} 
+%\label{eqn:sensitization}
+%\end{equation}
 %
-\begin{equation}
-\Delta k_{DEC} = \frac{\Delta k_{INC}} {J - 1} 
-\label{eqn:sensitization}
-\end{equation}
-%
-Eq. \ref{eqn:task-urgency} establishes the fact that task urgency will increase at a higher rate than that of its decrease. As we do not like to keep a task left unattended for a long time we choose a higher rate of increase of task urgency. Eq. \ref{eqn:sensitization} suggests that the learning will happen much faster than the forgetting. The difference in these two rates is based on the fact that faster leaning gives a robot more chances to select a task in next time-step and thus it becomes more specialized on it.
+%Eq. \ref{eqn:task-urgency} establishes the fact that task urgency will increase at a higher rate than that of its decrease. As we do not like to keep a task left unattended for a long time we choose a higher rate of increase of task urgency. Eq. \ref{eqn:sensitization} suggests that the learning will happen much faster than the forgetting. The difference in these two rates is based on the fact that faster leaning gives a robot more chances to select a task in next time-step and thus it becomes more specialized on it.
 %%%
 %\begin{table}
 %\caption{Experimental parameters of Series C \& D experiments}
@@ -553,6 +558,7 @@ Eq. \ref{eqn:task-urgency} establishes the fact that task urgency will increase 
 %\end{center}
 %\end{table}
 %% local
+
 Our LSLC startegy based experiments (Series C and D) follow the similar design of experimental parameters and observables of Series B experiments as outlined above. For the sake of simplicity, the communication and sensing range values are kept same in both series of experiments. Series D uses 1m ranges that enables our robot to capture more task information at a time. That is similar to  ``global sensing and global communication'' of information by the robots, since in a large group of robots, it is not often practical that a robot communicates with all other robots. On the other hand, Series C uses the half of the range values of Series D (0.5m). This enables our robots to capture less information, that mimics a close LSLC strategy. 
 %==============================================================
 \section{Implementation}
