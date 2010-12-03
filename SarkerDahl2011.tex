@@ -7,11 +7,11 @@
 %MRTA using AFM - 3 cols
 % Comm models - 3 cols
 %-----------------------------------------> 7 pages == 14 cols
-%Experiment Design 1 col
+%Experiment Design 2 col
 %Implementation 2 col
 %Results/Discussions 4 cols
-%Conclusion/Future work 1 col
-%References  2 cols
+%Conclusion/Future work 0.5 col
+%References  1.5 cols
 %-------------------------------------------> 5 pages == 10 cols
 %%
 \documentclass[journal]{IEEEtran}
@@ -529,7 +529,16 @@ In order to see the effects of scaling on MRTA, we have designed two group of ex
 \end{table}
 %%
 Table \ref{table:params} lists a set of essential parameters of our GSNC strategy based experiments (Series A and B). %We intend to have a set-up that is relatively complex, i.e., with a high number of robots and tasks in a large area. The diameter of the marker of our e-puck robot is 0.08m. So, if we put 4 robots in an area of one square meter, this will give us a robot-occupied-space to free-space ratio of about 1:49 per square meter. This ratio is reasonable in order to allow the robots to move at a speed of 5 cm/sec without causing much interference to each other. 
-The initial values of task urgencies correspond to 100 units of production work-load without any maintenance work-load as outlined in Eq. \ref{eqn:task-urgency-prod-init}. We choose a limit of 0 and 1, where 0 means no urgency and 1 means maximum urgency. Same rule applies to sensitisation, where 0 means no sensitisation and 1 means maximum sensitisation. This also implies that if sensitization is 0, task has been forgotten completely. On the other hand, if sensitization is 1, the task has been learnt completely.  %The following relationships are maintained for selecting task-urgency and sensitization parameters.
+The initial values of task urgencies correspond to 100 units of production work-load without any maintenance work-load as outlined in Eq. \ref{eqn:task-urgency-prod-init}. We choose a limit of 0 and 1, where 0 means no urgency and 1 means maximum urgency. Same rule applies to sensitisation. 
+\begin{figure*}[h]
+\centering
+\includegraphics[width=0.6\textwidth, angle=0]
+{./images/RIL-Expt-Setup1.eps}
+%figure caption is below the figure
+\caption{Hardware and software setup for series A \& B experiments}
+\label{fig:RIL-Expt-Setup1} % Give a unique label
+\end{figure*}
+This also implies that if sensitization is 0, task has been forgotten completely. On the other hand, if sensitization is 1, the task has been learnt completely.  %The following relationships are maintained for selecting task-urgency and sensitization parameters.
 %\begin{equation}
 %\Delta\phi_{INC} = \frac{\Delta\phi_{DEC} \times N}{2 \times J}
 %\label{eqn:task-urgency}
@@ -560,20 +569,12 @@ The initial values of task urgencies correspond to 100 units of production work-
 %% local
 
 Our LSLC startegy based experiments (Series C and D) follow the similar design of experimental parameters and observables of Series B experiments as outlined above. For the sake of simplicity, the communication and sensing range values are kept same in both series of experiments. Series D uses 1m ranges that enables our robot to capture more task information at a time. That is similar to  ``global sensing and global communication'' of information by the robots, since in a large group of robots, it is not often practical that a robot communicates with all other robots. On the other hand, Series C uses the half of the range values of Series D (0.5m). This enables our robots to capture less information, that mimics a close LSLC strategy. 
+%%
 %==============================================================
 \section{Implementation}
 \label{sec:imp}
-%%
-\begin{figure*}
-\centering
-\includegraphics[width=0.6\textwidth, angle=0]
-{./images/RIL-Expt-Setup1.eps}
-%figure caption is below the figure
-\caption{Hardware and software setup for series A \& B experiments}
-\label{fig:RIL-Expt-Setup1} % Give a unique label
-\end{figure*}
-%%
-Ideally, AFM can be implemented as a complete distributed task-allocation system where each agent selects its own task based on its own external perception about task-urgencies (i.e. attractive fields),  distances from tasks and internal task-sensitisation records. Such an implementation requires powerful robots with sophisticated sensors (camera, laser etc.) and sufficient computation and communication  capabilities. In that case, robots can keep  task-urgency information up-to-date  through suitable local communication  schemes with their peers who can monitor the tasks. By using suitable navigation and mapping modules, they can also accurately calculate the distances from tasks and navigate to tasks autonomously. Moreover, they also require necessary hardware to do the actual task, e.g. gripper for picking up objects. However, in this study, we are particularly interested to find the suitable communication schemes that can effectively spread the attractive fields (task-urgencies) among robots. So we have simplified the complexities of a full-fledged implementation by using a centralized communication system  that effectively makes up the limitations of our e-puck robots.  For example, our robots are not  capable of sensing a task to estimate its urgencies, instead our centralized TPS broadcast task information, e.g. task-urgencies, locations etc. to robots in certain time intervals. 
+%%%%
+Ideally, AFM can be implemented as a complete distributed task-allocation system where each agent selects its own task based on its own external perception about task-urgencies (i.e. attractive fields),  distances from tasks and internal task-sensitisation records. Such an implementation requires powerful robots with sophisticated sensors (camera, laser etc.) and sufficient computation and communication  capabilities. However, in this study, we are particularly interested to find the suitable communication schemes that can effectively spread the attractive fields (task-urgencies) among robots. So we have simplified the complexities of a full-fledged implementation by using a centralized communication system  that effectively makes up the limitations of our e-puck robots.  
 %%
 %\begin{figure*}
 %\centering
@@ -590,7 +591,7 @@ Ideally, AFM can be implemented as a complete distributed task-allocation system
 %\label{fig:expt-arena} % Give a unique label
 %\end{figure*}
 %%
-In our current implementation, instead of doing any real work with powerful robots, we emulate a mock manufacturing shop-floor scenario that requires the robot only to travel among tasks. As our robots do not have on-board CPU, they need a host PC to  control them using BTCom Bluetooth communication protocol over the wireless link \cite{Mondada+2009}. Thus our host-PC runs one RCC for each physical robot. These RCCs also rely upon SwisTrack multi-robot tracking system for updating their real-time pose. So although our MRTA solution is distributed by design, we primarily used a centralized approach to implement it due to the limitations of our robots and the convenience of implementation. Table \ref{table:dbus-signals} list the D-Bus communication interfaces among our software components. Fig. \ref{fig:concrete-arch} outlines the placements of various software components of our multi-robot control architecture based on their functional characteristics and processing requirements \cite{Sarker2010control}.
+In our current implementation, instead of doing any real work with powerful robots, we emulate a mock manufacturing shop-floor scenario that requires the robot only to travel among tasks. As our robots do not have on-board CPU, they need a host PC to  control them using BTCom Bluetooth communication protocol over the wireless link \cite{Mondada+2009}. Thus our host-PC runs one RCC for each physical robot. These RCCs also rely upon SwisTrack multi-robot tracking system for updating their real-time pose. So although our MRTA solution is distributed by design, we primarily used a centralized approach to implement it due to the limitations of our robots and the convenience of implementation. The placements of various software components of our multi-robot control architecture based on their functional characteristics and processing requirements has been outlined in \cite{Sarker2010control}.
 %%
 %\begin{table}
 %\caption{D-Bus signal interfaces among software components.}
@@ -626,62 +627,6 @@ In our current implementation, instead of doing any real work with powerful robo
 %\label{fig:swistrack-screenshot} 
 %\end{figure*}
 %-----------------------
-\subsubsection{RCC Modules}
-As shown in Fig. \ref{fig:RIL-Expt-Setup1}, each e-puck robot is controlled by a corresponding RCC. A RCC sends commands to the robot's firmware using BTCom protocol. A RCC consists of several Python modules. Each module represents a sub-process under a main process that ties all of them together by using Python's Multiprocessing module\footnote{http://docs.python.org/library/multiprocessing.html}. Below we have described briefly the implementation of these Python modules. All code are publicly accessible through GitHub repository\footnote{git://@github.com/roboshepherd/EpuckCentralizedClient.git,    
-\textit{hash:}7e3af8902e64db3fa59e}.
-%%
-%%
-%\begin{table}
-%\caption{Data structures and events used by the RCC}
-%\begin{center}
-%\begin{tabular}{|l|l|}
-%\hline \textbf{Data structure} & \textbf{Related event(s)}\\ 
-%\hline \texttt{\texttt{mRobotID}} & - \\ 
-%\hline \texttt{mRobotPose} & \texttt{mRobotPoseAvailable}\\ 
-%\hline \texttt{mTaskInfo} & \texttt{mTaskInfoAvailable}\\ 
-%\hline \texttt{mSelectedTask} & \texttt{mSelectedTaskAvailable}\\
-% &  \texttt{mSelectedTaskStarted}\\
-% &  \texttt{mTaskTimedOut}\\
-% \hline 
-%\end{tabular}
-%\end{center}
-%\label{table:data-mgr}
-%\end{table} 
-%---------------------
-In the implementation of RCC, we have employed a data and event management process called \texttt{DataManager} that acts as a data warehouse and event management centre for RCC. Table \ref{table:data-mgr} list the major data structures and corresponding event channels of \texttt{Data Manager}. Here \texttt{mRobotID} represents the e-puck robot's marker ID (converted to decimal number from the binary code) which uniquely identifies a robot from others.  We have used Python {\em dictionary} type data structure for all other data structures that are managed by the Python Multiprocessing's {\em Manager()} object.  \texttt{DataManager} object also runs a tiny TCP/IP server process powered by the Multiprocessing's {\em RemoteManager()} interface. So, if necessary,  any other process can access all of the DataManger's data structures and event channels remotely by instantiating a proxy client  that connects to this TCP/IP server process.
-
-We have employed two D-Bus communication modules in RCC: \texttt{SignalListener} and \texttt{SignalEmitter}, that are responsible for listening and emitting D-Bus signals respectively. \texttt{SignalListener}, has subscribed to D-Bus session bus for listening  to D-Bus \texttt{RobotPose} and \texttt{TaskInfo} signals. \texttt{SignalEmitter} makes use of Python {\em sched} module that enables it to check periodically \texttt{mSelectedTaskStarted} event and emit a robot's task status containing signal, \texttt{RobotStatus}. \texttt{TaskSelector} works in the application layer of our multi-robot control architecture. It plugs the AFM algorithms (Sec. \ref{ss:rcc-alg}) into RCC to select task based-on \texttt{DataManger}'s event notifications.
-%%
-%\begin{figure*}
-%\centering
-%\includegraphics[width=0.7\linewidth,height=11cm]
-%{./images/rcc-device-controller-state.eps}
-%%figure caption is below the figure
-%\caption{State diagram of \texttt{DeviceController} module}
-%\label{fig:dc-states} % Give a unique label
-%\end{figure*}
-
-%The final code that moves a robot to desired task location or make random-walk resides in \texttt{DeviceController} module. When \texttt{TaskSelector} sets  \texttt{mSelectedTaskAvailable} event \texttt{DeviceController} sub-process checks the Bluetooth link-connectivity with physical robot. In case of successful task start-up it sets \texttt{mSelectedTaskStarted} event that, in turn, triggers \texttt{SignalEmitter} to emit a D-Bus signal publishing the robot's currently engaged task. The full state switching policies of \texttt{DeviceController} is illustrated in Fig. \ref{fig:dc-states}. Externally we can observe two distinct physical state of a robot: it is either idle or in motion (separated by dotted line). These two physical states are mapped into several logical steps as described below.
-%
-%\textbf{DeviceUnavailable: }
-%Periodically \texttt{DeviceController} checks whether the device has connected to host-PC and changes its state to \textit{DeviceAvailable} (i.e device connected). We can see that from every other state, device can come to this unavailable state (shown by dotted arrow) when the  link is lost e.g. in case of robot's low battery or any other disconnection event (i.e device disconnected).
-%
-%\textbf{DeviceAvailable: }
-%\texttt{DeviceController} stays in this state until \texttt{Data-Manager}'s mSelectedTaskAvailable event fires (Device connected, no task selected). Then it switches to either \textit{MoveToTask} or \textit{RandomWalk} state depending on the selected task.  \texttt{DeviceController}  returns to this state from \textit{RandomWalk}, \textit{MoveToTask} or \textit{AtTask} states after a pre-set task time-out period has elapsed.  In that case it triggers the \texttt{DataManager}'s \texttt{mTaskTimedOut} event.
-%
-%\textbf{RandomWalk: }
-%Robot can random walk in two cases: 1) when \texttt{TaskSelector} selects this random-walk task or 2) when the robot can not get its pose information for a moment. The latter helps the pose tracker to recover the robot-pose from a crowd of robots. Robot continues to do random-walk until it's task time-out period elapses or it's pose remains unavailable from the pose tracker (i.e. random-walk pending).
-%
-%\textbf{MoveToTask: }
-%In this state, robot takes step-by-step navigation approach to reach a task boundary. Until the robot reaches the task boundary (Away from task), in every navigation-step it adjusts its heading to task based on both  robot and task pose information and then makes a fixed-time translation movement. In worse cases, when time-out happens early before reaching a task  \texttt{DeviceController} switches from this state to \textit{DeviceAvailable} state. However, if the same task is selected immediately, it is more likely that it will go to \textit{AtTask} state in next few steps.
-%
-%\textbf{AtTask: }
-%In this state  \texttt{DeviceController} discovers itself neat the task and normally until task time-out happens (i.e. task pending) it stays at this state.
-In order to realize LPCM strategy, in the implementation of RCC we have added three new D-Bus signal interfaces. They are briefly specified in Table \ref{table:dbus-signals}. Our base implementation of RCC's task-allocation (i.e. \texttt{TaskSelector}) is almost unchanged in this local implementation. The only thing we need to extend is the D-Bus signal reception and emission interfaces that catches the above signals and put the signal payload in \texttt{DataManager}. For the sake of simplicity, we have merges the perceived \texttt{TaskInfo} with communicated \texttt{LocalTaskInfo} into one so that \texttt{TaskAllocator} always gets all available task information. We have not made any major change in other modules of RCC, i.e. \texttt{DeviceController}. The full Python implementation of this RCC is available for download from the GitHub repository\footnote{http://github.com/roboshepherd/EpuckDistributedClient }.
-%---------------------------
-\subsubsection{TPS modules}
-In our GSNC strategy based implementation of TPS periodically broadcasts \texttt{TaskInfo} signals to all robots using similar D-Bus signal emitting and listening modules. Task information has been updated by a separate Python module following the TPS algorithm described before. In the local version, TPS only emits \texttt{TaskInfo} signal when a robot is within a task's perception range, $r_{task}$ based-on the \texttt{TaskNeighbour} signal from SwisTrack. For this additional interface, we have extended D-Bus \texttt{SignalListener} to catch this additional D-Bus signal.  No major changes are done in the other parts of TPS implementation. The full Python implementation of TPS is available for download from the authors' GitHub centralized\footnote{http://github.com/roboshepherd/CentralizedTaskServer}
-and distribued \footnote{http://github.com/roboshepherd/DitributedTaskServer} repositories.
 %================================================================
 \section{Results}
 \label{sec:results}
@@ -694,19 +639,19 @@ In our experiments we have defined shop-floor work-load in terms of task urgenci
 %\begin{minipage}[t]{0.48\linewidth}
 \centering
 \subfloat[Series A]
-{\includegraphics[width=0.7\linewidth, angle=0]
+{\includegraphics[width=0.99\linewidth, angle=0]
 {images/SA-PlotUrgencyLog-2010Apr30-095755.eps}}
 \newline
 \subfloat[Series B]
-{\includegraphics[width=0.7\linewidth, angle=0]
+{\includegraphics[width=0.99\linewidth, angle=0]
 {images/SB-PlotUrgencyLog-2010May10-115549.eps}}
 \newline
 \subfloat[Series C]
-{\includegraphics[width=0.7\linewidth, angle=0]
+{\includegraphics[width=0.99\linewidth, angle=0]
 {images/SC-PlotUrgencyLog-2010Feb15-171017.eps}}
 \newline
 \subfloat[Series D]
-{\includegraphics[width=0.7\linewidth, angle=0]
+{\includegraphics[width=0.99\linewidth, angle=0]
 {images/SD-PlotUrgencyLog-2010Feb17-112141.eps}}
 \newline
 \caption{Changes in task-urgencies.}
@@ -717,19 +662,19 @@ In our experiments we have defined shop-floor work-load in terms of task urgenci
 %\begin{figure}
 \centering
 \subfloat[Series A]
-{\includegraphics[width=0.65\linewidth, angle=0]
+{\includegraphics[width=0.99\linewidth, angle=0]
 {images/SA-8robots2tasks-TaskUrgencyStat.eps}}
 \newline
 \subfloat[Series B]
-{\includegraphics[width=0.65\linewidth, angle=0]
+{\includegraphics[width=0.99\linewidth, angle=0]
 {images/SB-TaskUrgencyStat.eps}}
 \newline
 \subfloat[Series C]
-{\includegraphics[width=0.65\linewidth, angle=0]
+{\includegraphics[width=0.99\linewidth, angle=0]
 {images/SC-TaskUrgencyStat.eps}}
 \newline
 \subfloat[Series D]
-{\includegraphics[width=0.65\linewidth, angle=0]
+{\includegraphics[width=0.99\linewidth, angle=0]
 {images/SD-TaskUrgencyStat.eps}}
 \newline
 \caption{Shop-floor workload change history.}
